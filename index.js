@@ -8,7 +8,35 @@ app.use(express.json());
 intializeDatabase();
 
 const cors = require("cors");
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
 app.use(cors());
+
+// to get all the movies from database
+async function readAllMovies() {
+  try {
+    const allMovies = await Movie.find();
+    return allMovies;
+  } catch (error) {
+    throw error;
+  }
+}
+app.get("/movies", async (req, res) => {
+  try {
+    const movies = await readAllMovies();
+    if (movies.length != 0) {
+      res.json(movies);
+    } else {
+      res.status(404).json({ error: "No movies found." });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch movies." });
+  }
+});
 
 async function createMovie(newMovie) {
   try {
@@ -49,28 +77,6 @@ app.get("/movies/:title", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch movie." });
-  }
-});
-
-// to get all the movies from database
-async function readAllMovies() {
-  try {
-    const allMovies = await Movie.find();
-    return allMovies;
-  } catch (error) {
-    throw error;
-  }
-}
-app.get("/movies", async (req, res) => {
-  try {
-    const movies = await readAllMovies();
-    if (movies.length != 0) {
-      res.json(movies);
-    } else {
-      res.status(404).json({ error: "No movies found." });
-    }
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch movies." });
   }
 });
 
