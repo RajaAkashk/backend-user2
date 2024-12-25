@@ -14,7 +14,7 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // to get all the movies from database
 async function readAllMovies() {
@@ -126,7 +126,7 @@ app.get("/movies/genres/:genreName", async (req, res) => {
   }
 });
 
-// find a movie bt id and update its rating.
+// find a movie by id and update 
 async function updateMovie(movieId, dataToUpdate) {
   try {
     const updatedMovie = await Movie.findByIdAndUpdate(movieId, dataToUpdate, {
@@ -138,7 +138,7 @@ async function updateMovie(movieId, dataToUpdate) {
   }
 }
 
-app.post("/movies/:moviesId", async (req, res) => {
+app.put("/movies/:moviesId", async (req, res) => {
   try {
     const movie = await updateMovie(req.params.moviesId, req.body);
     if (movie) {
