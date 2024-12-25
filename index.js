@@ -126,7 +126,7 @@ app.get("/movies/genres/:genreName", async (req, res) => {
   }
 });
 
-// find a movie by id and update 
+// find a movie by id and update
 async function updateMovie(movieId, dataToUpdate) {
   try {
     const updatedMovie = await Movie.findByIdAndUpdate(movieId, dataToUpdate, {
@@ -181,7 +181,9 @@ async function deleteMovie(movieId) {
 app.delete("/movies/:movieId", async (req, res) => {
   try {
     const deletedMovie = await deleteMovie(req.params.movieId);
-    res.status(200).json({ message: "Movie deleted successfully." });
+    res
+      .status(200)
+      .json({ message: "Movie deleted successfully.", movie: deletedMovie });
   } catch {
     res.status(404).json({ error: "Failed to delete Movie." });
   }
@@ -202,4 +204,4 @@ app.listen(PORT, () => {
   console.log("Server is running on port -", PORT);
 });
 
-module.exports = app ;
+module.exports = app;
