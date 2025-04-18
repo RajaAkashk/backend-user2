@@ -38,6 +38,18 @@ app.get("/movies", async (req, res) => {
   }
 });
 
+// app.get("/", async (req, res) => {
+//   try {
+//     const movies = await Movie.find();
+//     if (movies.length === 0) {
+//       res.status(404).json({ message: "Movie not found" });
+//     }
+//     res.status(200).json({ message: "Successfully getting movies", movies });
+//   } catch (error) {
+//     res.status(500).json({ message: "Failed to fetch movies",error });
+//   }
+// });
+
 async function createMovie(newMovie) {
   try {
     const hindiMovie = new Movie(newMovie);
@@ -57,6 +69,18 @@ app.post("/movies", async (req, res) => {
     res.status(500).json({ error: "Failed to add data." });
   }
 });
+
+// app.post("/", async (req, res) => {
+//   try {
+//     const newMovie = new Movie(req.body);
+//     const savedMovie = await newMovie.save();
+//     res
+//       .status(201)
+//       .json({ message: "Successfully added new movie", savedMovie });
+//   } catch (error) {
+//     res.status(500).json({ message: "Failed to add a movie", error });
+//   }
+// });
 
 async function readMovieByTitle(movieTitle) {
   try {
